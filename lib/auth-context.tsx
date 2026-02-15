@@ -9,6 +9,8 @@ type AuthContextType = {
     email: string | null
     isLoading: boolean
     signOut: () => void
+    profile: { first_name: string; last_name: string; email: string; clinic?: { name: string }; role?: string } | null
+    user: { id: string; first_name?: string; last_name?: string; email?: string } | null
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -46,15 +48,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
     }
 
+    const dummyProfile = clinicName ? {
+        first_name: adminName?.split(' ')[0] || "Admin",
+        last_name: adminName?.split(' ')[1] || "User",
+        email: email || "admin@example.com",
+        clinic: { name: clinicName },
+        role: "admin"
+    } : null
+
+    const dummyUser = clinicName ? {
+        id: "dummy-user-id",
+        ...dummyProfile
+    } : null
+
     return (
-        <AuthContext.Provider 
-            value={{ 
-                isAuthenticated: !!clinicName, 
-                clinicName, 
-                adminName, 
-                email, 
-                isLoading, 
-                signOut 
+        <AuthContext.Provider
+            value={{
+                isAuthenticated: !!clinicName,
+                clinicName,
+                adminName,
+                email,
+                isLoading,
+                signOut,
+                profile: dummyProfile,
+                user: dummyUser
             }}
         >
             {children}

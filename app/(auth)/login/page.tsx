@@ -16,31 +16,18 @@ import { createClient } from "@/lib/supabase"
 export default function LoginPage() {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
-    const supabase = createClient()
+    // const supabase = createClient()
 
     async function onSubmit(event: React.FormEvent) {
         event.preventDefault()
         setIsLoading(true)
 
-        const formData = new FormData(event.currentTarget as HTMLFormElement)
-        const email = formData.get("email") as string
-        const password = formData.get("password") as string
+        // Simulating login delay
+        await new Promise(resolve => setTimeout(resolve, 1000))
 
-        try {
-            const { error } = await supabase.auth.signInWithPassword({
-                email,
-                password,
-            })
-
-            if (error) throw error
-
-            toast.success("Welcome back!")
-            router.push("/dashboard")
-        } catch (error) {
-            toast.error(error instanceof Error ? error.message : "Invalid login credentials")
-        } finally {
-            setIsLoading(false)
-        }
+        toast.success("Welcome back! (Dummy Login)")
+        router.push("/dashboard")
+        setIsLoading(false)
     }
 
     return (
