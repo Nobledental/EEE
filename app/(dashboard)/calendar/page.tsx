@@ -9,7 +9,7 @@ export default async function CalendarPage() {
     const supabase = await createClient()
 
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) redirect("/login")
+    // if (!user) redirect("/login")
 
     let clinicId
     try {

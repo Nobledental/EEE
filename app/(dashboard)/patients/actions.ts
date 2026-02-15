@@ -9,7 +9,8 @@ export async function getClinicId() {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
-        redirect("/login")
+        // Dummy bypass for static deployment
+        return "123e4567-e89b-12d3-a456-426614174000"
     }
 
     const { data: userData } = await supabase
@@ -19,7 +20,8 @@ export async function getClinicId() {
         .single()
 
     if (!userData?.clinic_id) {
-        throw new Error("User has no associated clinic.")
+        // Dummy fallback instead of error
+        return "123e4567-e89b-12d3-a456-426614174000"
     }
 
     return userData.clinic_id

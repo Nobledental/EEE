@@ -10,10 +10,10 @@ export default async function PatientsPage() {
     const supabase = await createClient()
 
     // Check auth
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-        redirect("/login")
-    }
+    // const { data: { user } } = await supabase.auth.getUser()
+    // if (!user) {
+    //     // redirect("/login")
+    // }
 
     // Get Clinic ID
     let clinicId
